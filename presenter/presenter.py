@@ -40,9 +40,3 @@ class Presenter(QtCore.QObject):
                 self.ui.draw_particle(particle.x, particle.y, particle.status)
             self.ui.set_scene()
             self.framecounter += 1
-
-
-
-
-
-
