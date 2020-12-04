@@ -124,7 +124,7 @@ in %</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>760</y>
+      <y>720</y>
       <width>1231</width>
       <height>16</height>
      </rect>
@@ -133,11 +133,11 @@ in %</string>
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="countInput">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>800</y>
+      <y>760</y>
       <width>141</width>
       <height>20</height>
      </rect>
@@ -147,7 +147,7 @@ in %</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>780</y>
+      <y>740</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -160,7 +160,7 @@ in %</string>
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>770</y>
+      <y>730</y>
       <width>16</width>
       <height>81</height>
      </rect>
@@ -173,7 +173,7 @@ in %</string>
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>770</y>
+      <y>730</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -186,7 +186,7 @@ in %</string>
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>830</y>
+      <y>790</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -203,7 +203,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>810</y>
+      <y>770</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -213,7 +213,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>790</y>
+      <y>750</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -226,7 +226,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>810</y>
+      <y>770</y>
       <width>69</width>
       <height>22</height>
      </rect>
@@ -246,7 +246,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>790</y>
+      <y>750</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -259,7 +259,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>1060</x>
-      <y>770</y>
+      <y>730</y>
       <width>16</width>
       <height>81</height>
      </rect>
@@ -272,7 +272,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>1080</x>
-      <y>800</y>
+      <y>760</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -285,7 +285,7 @@ color: rgb(211, 211, 211);</string>
     <property name="geometry">
      <rect>
       <x>1080</x>
-      <y>770</y>
+      <y>730</y>
       <width>171</width>
       <height>21</height>
      </rect>
@@ -315,17 +315,37 @@ color: rgb(211, 211, 211);</string>
      <string>Gruppe mit Maßnahmen</string>
     </property>
    </widget>
-   <widget class="QLabel" name="drawing">
+   <widget class="QGraphicsView" name="view">
     <property name="geometry">
      <rect>
       <x>660</x>
       <y>30</y>
-      <width>601</width>
-      <height>601</height>
+      <width>600</width>
+      <height>600</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="infectedInput">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>810</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>790</y>
+      <width>141</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>Anfänglich Infizierte</string>
     </property>
    </widget>
   </widget>
