@@ -8,6 +8,4 @@ if __name__ == '__main__':
     presenter = Presenter()
     presenter.ui.show()
 
-
-
     sys.exit(app.exec_())

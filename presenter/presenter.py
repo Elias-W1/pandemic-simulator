@@ -10,14 +10,18 @@ class Presenter(QtCore.QObject):
     def __init__(self):
         super(Presenter, self).__init__()
 
-        self.particle_size = 25      #TODO: SET PARTICLE SIZE FUNCTION FOR VIEW AND SIM
-        self.ui = View(self.particle_size)
-        self.simulation = Simulation(self.particle_size)
+        self.particle_size = 20
+
+        # create view and simulation
+        self.ui = View()
+        self.simulation = Simulation()
+
+        # set particle size in view and simulation
+        self.ui.set_particle_size(self.particle_size)
+        self.simulation.set_particle_size(self.particle_size)
 
         # connect signals
         self.ui.start_simulation_signal.connect(self.start_simulation)
-
-
 
 
     def start_simulation(self):
@@ -40,3 +44,5 @@ class Presenter(QtCore.QObject):
                 self.ui.draw_particle(particle.x, particle.y, particle.status)
             self.ui.set_scene()
             self.framecounter += 1
+            self.ui.set_infectedLabel(self.simulation.infected_count)
+            self.ui.set_healthyLabel(self.simulation.particle_count - self.simulation.infected_count)

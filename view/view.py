@@ -5,15 +5,16 @@ import PyQt5.QtCore
 from PyQt5.QtGui import QColor, QPen
 
 class View(QtWidgets.QMainWindow, Ui_MainWindow):
-    start_simulation_signal = QtCore.pyqtSignal()   # does not work in the constructor apparently.
+    start_simulation_signal = QtCore.pyqtSignal()   # signals do not work in the constructor apparently.
 
-    def __init__(self, particle_size):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.create_widgets()
         self.connect_signals()
         self.create_pens()
 
+    def set_particle_size(self, particle_size):
         self.particle_size = particle_size
 
     def create_pens(self):
@@ -56,3 +57,9 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
     def startBtn_clicked(self):
         print("Start button pressed.")
         self.start_simulation_signal.emit()
+
+    def set_infectedLabel(self, count):
+        self.infectedLabel.setText("{count} Erkrankt.".format(count=count))
+
+    def set_healthyLabel(self, count):
+        self.healthyLabel.setText("{count} Gesund.".format(count=count))
