@@ -14,6 +14,8 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
         self.connect_signals()
         self.create_pens()
 
+        self.graph.setYRange(0, 1)
+
     def set_particle_size(self, particle_size):
         self.particle_size = particle_size
 
@@ -37,6 +39,19 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
         self.graphWidget.setBackground('b')
         self.graphWidget.plot(range(10), range(10))
 
+        # print("DEBUGGING VIEW.CREATE_WIDGETS")
+        # self.set_particle_size(10)
+        # self.create_pens()
+        # self.test_scene()
+
+    def test_scene(self):
+        self.scene.addEllipse(0, 0, self.particle_size, self.particle_size,  self.pen_healthy)
+        self.scene.addEllipse(100, 0, self.particle_size, self.particle_size,  self.pen_healthy)
+        self.scene.addEllipse(0, 100, self.particle_size, self.particle_size,  self.pen_healthy)
+        self.scene.addEllipse(200, 0, self.particle_size, self.particle_size,  self.pen_healthy)
+        self.scene.addEllipse(0, 200, self.particle_size, self.particle_size,  self.pen_healthy)
+        self.scene.addEllipse(600, 600, self.particle_size, self.particle_size,  self.pen_healthy)
+
     def draw_particle(self, x, y, status):
         if status == "h":
             pen = self.pen_healthy
@@ -45,16 +60,15 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
         self.scene.addEllipse(x, y, self.particle_size, self.particle_size, pen)
 
     def reset_scene(self):
-        self.scene = None
-        self.scene = QGraphicsScene()
+        self.scene.clear()
 
     def set_scene(self):
         self.view.setScene(self.scene)
 
     def connect_signals(self):
-        self.startBtn.pressed.connect(self.startBtn_clicked) # lambda usage?
+        self.startBtn.pressed.connect(self.startBtn_clicked)
 
-    def startBtn_clicked(self):
+    def startBtn_clicked(self): # lambda usage?
         print("Start button pressed.")
         self.start_simulation_signal.emit()
 

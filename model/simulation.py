@@ -3,6 +3,9 @@ from random import randint
 import random
 import time
 
+#TODO: implement measures.
+
+
 def get_reversed(listobj):
     newlist = listobj.copy()
     newlist.reverse()
@@ -22,14 +25,43 @@ class Simulation():
         self.particle_count = 0
         self.set_infected_count(0)
 
-    def create_particles(self, count, count_infected):      # TODO: MAKE PARTICLES SPAWN NOT OVERLAPPING
+    def create_particles(self, count, count_infected):
+
         self.particle_count = count
         self.particles = []
-        for i in range(count_infected):
-            self.create_particle("i")
 
-        for i in range(count - count_infected):
-            self.create_particle("h")
+        particles_per_row = (self.x_border // (self.particle_size*2+1)) // 2
+        rows_maximum = (self.y_border // (self.particle_size*2+1)) // 2
+        rows = count // particles_per_row
+        if count % particles_per_row > 0:
+            rows = rows + 1
+
+        print(rows,"<", rows_maximum)
+
+        assert rows < rows_maximum, "Rows maximum exceeded."
+
+
+        print("Particles per row: ",particles_per_row)
+        print("rows maximum: ",rows_maximum)
+
+        # Make randomly scrambled list with infected/healthy status strings to randomize positions of infected and healthy particles later.
+        particles = ["i"]*count_infected
+        particles.extend(["h"]*(count-count_infected))
+        random.shuffle(particles)
+
+        for i in range(len(particles)):
+            status = particles[i]
+            x = ((i+1) % particles_per_row)+1
+            y = ((i+1) // rows_maximum) + 1
+            print("i: ",i,"x:",x,"y:",y)
+
+            self.create_particle(status, (self.particle_size * 2 + 1) * x * 2 , self.y_border - ((self.particle_size * 2 + 1) * y * 2)  )
+
+        # for i in range(count_infected):
+        #     self.create_particle("i", randint(0, self.x_border - (self.particle_size * 2 + 1)), randint(0, self.y_border - (self.particle_size * 2 + 1)))
+        #
+        # for i in range(count - count_infected):
+        #     self.create_particle("h", randint(0, self.x_border - (self.particle_size * 2 + 1)), randint(0, self.y_border - (self.particle_size * 2 + 1)))
 
         self.set_infected_count(count_infected)
 
@@ -37,25 +69,27 @@ class Simulation():
         self.particle_size = particle_size
 
     def set_infected_count(self, newcount):
-        if self.infected_count != newcount:
-            print("{count} particles infected.".format(count=newcount))
         self.infected_count = newcount
 
-    def create_particle(self, status):
+    def create_particle(self, status, startx, starty):
         moving_dirs = [-1,1]
-        self.particles.append(Particle(status, randint(0, self.x_border-(self.particle_size*2+1)), randint(0, self.y_border-(self.particle_size*2+1)), random.choice(moving_dirs), random.choice(moving_dirs)))
+        self.particles.append(Particle(status, startx, starty, random.choice(moving_dirs), random.choice(moving_dirs)))
 
     def move_particles(self):
         """Move particles"""
-        #TODO: MAKE CORRECT WALL COLLISION CHECK.
         for particle in self.particles:
-            if particle.x-particle.size//2+particle.x_movement-1 <= 0 or particle.x+particle.size//2+particle.x_movement+1 >= self.x_border:
+            if particle.x-(particle.size+1)+particle.x_movement-1 <= 0 and particle.x_movement < 0:
                 particle.repel_x()
-            particle.x = particle.x + particle.x_movement
+            elif particle.x+(particle.size+1)*2+particle.x_movement+1 >= self.x_border-self.particle_size and particle.x_movement > 0:
+                particle.repel_x()
 
-            if particle.y-particle.size//2+particle.y_movement-1 <= 0 or particle.y+particle.size//2+particle.y_movement+1 >= self.y_border:
+            if particle.y-(particle.size+1)+particle.y_movement-1 <= 0 and particle.y_movement < 0:
                 particle.repel_y()
-            particle.y = particle.y + particle.y_movement
+            elif particle.y+(particle.size+1)+particle.y_movement+1 >= self.y_border-self.particle_size and particle.y_movement > 0:
+                particle.repel_y()
+
+            particle.move()
+
 
 
 
@@ -106,18 +140,18 @@ class Simulation():
         """Collision of 2 particles routine."""
         # print("Collision at ({x1},{y1}) and ({x2},{y2})".format(x1=particle_a.x,x2=particle_b.x, y1=particle_a.y, y2=particle_b.y))
         if particle_a.status == "i" and particle_b.status == "h":
-            print("A infects B.")
             particle_b.change_status("i")
         elif particle_a.status == "h" and particle_b.status == "i":
             particle_a.change_status("i")
-            print("B infects A.")
 
         # particles repelling
-        #TODO: find right repelling.
         particle_a.repel_x()
         particle_a.repel_y()
         particle_b.x_movement = particle_a.x_movement * (-1)
         particle_b.y_movement = particle_a.y_movement * (-1)
+
+        particle_a.move()
+        particle_b.move()
 
 
     def set_measures(self, social_distancing=False):
@@ -144,6 +178,10 @@ class Particle():
     def repel_y(self):
         self.y_movement = self.y_movement * (-1)
 
+    def move(self):
+        self.x = self.x + self.x_movement
+        self.y = self.y + self.y_movement
+
 
 
 
@@ -151,7 +189,8 @@ class Particle():
 if __name__ == "__main__":
     print("Debugging Simulation")
     s = Simulation()
-    s.create_particles(50, 15)
+    s.set_particle_size(10)
+    s.create_particles(1, 0)
     fps = 60
     while True:
         s.tick()
