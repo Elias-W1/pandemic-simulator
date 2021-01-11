@@ -5,7 +5,10 @@ import PyQt5.QtCore
 from PyQt5.QtGui import QColor, QPen
 
 class View(QtWidgets.QMainWindow, Ui_MainWindow):
-    start_simulation_signal = QtCore.pyqtSignal()   # signals do not work in the constructor apparently.
+    play_pause_simulation_signal = QtCore.pyqtSignal()   # signals do not work in the constructor apparently.
+    reset_simulation_signal = QtCore.pyqtSignal()
+    export_data_signal = QtCore.pyqtSignal()
+
 
     def __init__(self):
         super().__init__()
@@ -22,6 +25,8 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
     def create_pens(self):
         self.pen_infected = QPen(QColor(255, 0, 0, 128))
         self.pen_healthy = QPen(QColor(0, 255, 33, 128))
+        self.pen_dead = QPen(QColor(136, 136, 136, 128))
+        self.pen_recovered = QPen(QColor(12, 0, 193, 128))
 
     def create_widgets(self):
         """Initializes widgets."""
@@ -57,6 +62,10 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
             pen = self.pen_healthy
         elif status == "i":
             pen = self.pen_infected
+        elif status == "d":
+            pen = self.pen_dead
+        elif status == "r":
+            pen = self.pen_recovered
         self.scene.addEllipse(x, y, self.particle_size, self.particle_size, pen)
 
     def reset_scene(self):
@@ -67,13 +76,24 @@ class View(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def connect_signals(self):
         self.startBtn.pressed.connect(self.startBtn_clicked)
+        self.resetBtn.pressed.connect(lambda: self.reset_simulation_signal.emit())
+        self.exportBtn.pressed.connect(lambda: self.export_data_signal.emit())
 
-    def startBtn_clicked(self): # lambda usage?
+    def startBtn_clicked(self):
         print("Start button pressed.")
-        self.start_simulation_signal.emit()
+        self.play_pause_simulation_signal.emit()
 
     def set_infectedLabel(self, count):
         self.infectedLabel.setText("{count} Erkrankt.".format(count=count))
 
     def set_healthyLabel(self, count):
         self.healthyLabel.setText("{count} Gesund.".format(count=count))
+
+    def set_deadLabel(self, count):
+        self.deadLabel.setText("{count} Gestorben.".format(count=count))
+
+    def set_recoveredLabel(self, count):
+        self.recoveredLabel.setText("{count} Genesen.".format(count=count))
+
+    def reset_graph(self):
+        self.graphWidget.clear()
