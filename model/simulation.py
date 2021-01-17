@@ -48,7 +48,7 @@ class Simulation():
 
         print(rows,"<", rows_maximum)
 
-        assert rows < rows_maximum, "Rows maximum exceeded."
+        assert rows < rows_maximum, "Rows maximum exceeded." # this is not good. todo
 
 
         print("Particles per row: ",particles_per_row)
