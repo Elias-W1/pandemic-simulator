@@ -3,17 +3,23 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 
-# TODO: make absoulte size value for particle x/y
-# TODO: better time complexity ( bis zu 200 Partikel möglich)
+
 # TODO: skalierbarkeit des SimulationsGraphicsView
-# TODO: eigener Infektionsradius
-# TODO: Movement Speed & FPS Speed hinzufügen (oder Doppelter speed anstatt doppelte FPS)
+# TODO: Movement Speed & FPS Speed hinzufügen (oder Doppelter speed anstatt doppelte FPS) (2 Timer und entkoppeln)
 # TODO: Mutation
 # todo: make rows maximum limit better
-# todo: klassen auf files aufteilen
 # todo: fentser soll skalieren oh man
-# todo: make robust get input from LineEdit function
+
+# todo: grey graphicsview background
+
+# todo: implement measures.
+
+# todo: fix bugs regarding particle size...
+# todo: fix stuck particle clusters
 # todo: eventuell graph verändern, dass alle Kurven zusammen = 100%
+# todo: check graph plotting verbesern
+
+# todo: enum für zustand
 
 
 
