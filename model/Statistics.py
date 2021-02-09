@@ -75,3 +75,10 @@ class Statistics():
             changed = True
 
         return changed
+
+    def check_simulation_finished(self):
+        if len(self.healthy_count_history) > 0 and len(self.dead_count_history) > 0:
+            if (self.healthy_count_history[-1] + self.dead_count_history[-1]) == self.particle_count:
+                return True
+
+        return False
