@@ -41,8 +41,16 @@ class Statistics():
         self.recovered_percent_history.append(recovered_count / self.particle_count)
         self.dead_percent_history.append(dead_count / self.particle_count)
 
-    def get_live_data(self):
-        return self.stepcounter, self.healthy_percent_history[-1], self.infected_percent_history[-1], self.recovered_percent_history[-1], self.dead_percent_history[-1]
+    # def get_live_data(self):          # plain live data
+    #     return self.stepcounter, self.healthy_percent_history[-1], self.infected_percent_history[-1], self.recovered_percent_history[-1], self.dead_percent_history[-1]
+
+    def get_live_data(self): # stacked graph live data
+        infected = self.infected_percent_history[-1]
+        healthy = self.healthy_percent_history[-1] + infected
+        dead = 1 - self.dead_percent_history[-1]
+        recovered = dead - self.recovered_percent_history[-1]
+
+        return self.stepcounter, healthy, infected, recovered, dead
 
     def adapt_list_to_granularity(self, listobj, granularity):
         newlist = []

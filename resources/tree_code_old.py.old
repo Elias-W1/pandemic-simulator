@@ -1,0 +1,56 @@
+# Old code for recursive Reingold-Tilford-Algorithm-like Tree Drawing, which never worked.
+
+# def get_mutation_tree_structure(self, disease, depth, structure_dict, maxdepth):
+    #     for i in range(len(disease.children)):
+    #         newdisease = disease.children[i]
+    #         maxdepth, structure_dict = self.get_mutation_tree_structure(newdisease, depth+1, structure_dict, maxdepth)
+    #
+    #     if not depth in structure_dict:
+    #         structure_dict[depth] = len(disease.children)
+    #     else:
+    #         structure_dict[depth] = max(len(disease.children), structure_dict[depth])
+    #
+    #     maxdepth = max(maxdepth, depth)
+    #
+    #     return maxdepth, structure_dict
+
+
+
+
+
+    # def draw_mutation_tree(self, disease, depth, structure_dict, maxdepth, maxdepth_nodecount, nodes_on_layer): # Recursive method to draw mutation tree with depth-first-search.nodes_before = nodes_on_layer[depth]
+    #
+    #     if structure_dict[depth] == 0:
+    #         return
+    #
+    #     structure_depth_nodecount = 1
+    #     for i in range(1,depth):
+    #         structure_depth_nodecount = structure_depth_nodecount*structure_dict[i]
+    #
+    #     base_position = maxdepth_nodecount / (2*structure_depth_nodecount)
+    #     print(base_position, "base_position on depth",depth)
+    #     if not depth in nodes_on_layer:
+    #         nodes_on_layer[depth] = 0
+    #
+    #     # placement = 1  # place left if -1 and right if 1
+    #     # if nodes_on_layer[depth] % 2 == 0:
+    #     #     placement = -1
+    #
+    #     TREE_NODE_HORIZONTAL_DISTANCE = 30*depth # todo in constants file
+    #
+    #     if depth == 0:
+    #         self.draw_mutation(disease, maxdepth_nodecount // 2, 0)
+    #         nodes_on_layer[depth] = nodes_on_layer[depth]+1
+    #         self.draw_mutation_tree(disease, depth + 1, structure_dict, maxdepth, maxdepth_nodecount, nodes_on_layer)
+    #     else:
+    #
+    #         for i in range(len(disease.children)):
+    #             child = disease.children[i]
+    #             self.draw_mutation(child, int(TREE_NODE_HORIZONTAL_DISTANCE * nodes_on_layer[depth] + base_position), (depth+1) * 30)
+    #
+    #         nodes_on_layer[depth] = nodes_on_layer[depth]+structure_dict[depth]
+    #
+    #         for child in disease.children:
+    #             self.draw_mutation_tree(child, depth + 1, structure_dict, maxdepth, maxdepth_nodecount, nodes_on_layer)
+    #
+    #         print(nodes_on_layer)
